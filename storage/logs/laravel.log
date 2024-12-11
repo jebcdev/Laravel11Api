@@ -369,3 +369,11 @@
 [stacktrace]
 #0 {main}
 "} 
+[2024-12-11 16:07:41] local.ERROR: syntax error, unexpected token "(" {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): syntax error, unexpected token \"(\" at D:\\laragon\\www\\Laravel11Api\\app\\Models\\Brand.php:14)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-11 16:35:40] local.ERROR: Trait "App\Models\SoftDeletes" not found {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Trait \"App\\Models\\SoftDeletes\" not found at D:\\laragon\\www\\Laravel11Api\\app\\Models\\PurchaseDetail.php:8)
+[stacktrace]
+#0 {main}
+"} 
