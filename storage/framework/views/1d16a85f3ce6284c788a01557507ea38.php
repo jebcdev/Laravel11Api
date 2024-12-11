@@ -161,4 +161,4 @@
         </div>
     </div>
 </div>
-<?php /**PATH D:\laragon\www\Laravel11Api\vendor\laravel\framework\src\Illuminate\Foundation\Providers/../resources/exceptions/renderer/components/trace.blade.php ENDPATH**/ ?>
+<?php /**PATH D:\laragon\www\Laravel11Api\vendor\laravel\framework\src\Illuminate\Foundation\resources\exceptions\renderer\components\trace.blade.php ENDPATH**/ ?>
