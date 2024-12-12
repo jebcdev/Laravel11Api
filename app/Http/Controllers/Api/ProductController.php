@@ -18,12 +18,12 @@ class ProductController extends Controller
     {
         try {
             return ApiResponse::Success(
-                Product::query()->with(['brand','category','purchaseDetails'])->orderBy('id', 'desc')->get(),
+                Product::query()->with(['brand', 'category', 'purchaseDetails'])->orderBy('id', 'desc')->get(),
                 'Products List',
                 200
             );
         } catch (Exception $e) {
-            return ApiResponse::Error($e->getMessage(), "Error While Fetching Products",500);
+            return ApiResponse::Error($e->getMessage(), "Error While Fetching Products", 500);
         }
     }
 
@@ -36,12 +36,12 @@ class ProductController extends Controller
             $data = $request->validated();
 
             return ApiResponse::Success(
-                Product::create($data)->load(['brand','category','purchaseDetails']),
+                Product::create($data)->load(['brand', 'category', 'purchaseDetails']),
                 'Product Created Successfully',
                 201
             );
         } catch (Exception $e) {
-            return ApiResponse::Error($e->getMessage(), "Error While Saving",500);
+            return ApiResponse::Error($e->getMessage(), "Error While Saving", 500);
         }
     }
 
@@ -52,12 +52,12 @@ class ProductController extends Controller
     {
         try {
             return ApiResponse::Success(
-                $product->load(['brand','category','purchaseDetails']),
+                $product->load(['brand', 'category', 'purchaseDetails']),
                 'Product Details',
                 200
             );
         } catch (Exception $e) {
-            return ApiResponse::Error($e->getMessage(), "Error While Fetching Details",500);
+            return ApiResponse::Error($e->getMessage(), "Error While Fetching Details", 500);
         }
     }
 
@@ -72,12 +72,12 @@ class ProductController extends Controller
             $product->update($data);
 
             return ApiResponse::Success(
-                $product,
+                $product->load(['brand', 'category', 'purchaseDetails']),
                 'Product Updated Successfully',
                 201
             );
         } catch (Exception $e) {
-            return ApiResponse::Error($e->getMessage(), "Error While Updating",500);
+            return ApiResponse::Error($e->getMessage(), "Error While Updating", 500);
         }
     }
 
@@ -95,7 +95,7 @@ class ProductController extends Controller
                 200
             );
         } catch (Exception $e) {
-            return ApiResponse::Error($e->getMessage(), "Error While Deleting",500);
+            return ApiResponse::Error($e->getMessage(), "Error While Deleting", 500);
         }
     }
 }

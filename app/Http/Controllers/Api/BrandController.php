@@ -19,7 +19,7 @@ class BrandController extends Controller
     {
         try {
             return ApiResponse::Success(
-                Brand::query()->orderBy('id', 'desc')->get(),
+                Brand::query()->with(['products'])->orderBy('id', 'desc')->get(),
                 'Brands List',
                 200
             );
@@ -54,7 +54,7 @@ class BrandController extends Controller
     {
         try {
             return ApiResponse::Success(
-                $brand,
+                $brand->load(['products']),
                 'Brands Details',
                 200
             );
@@ -75,7 +75,7 @@ class BrandController extends Controller
             $brand->update($data);
 
             return ApiResponse::Success(
-                $brand,
+                $brand->load(['products']),
                 'Brand Updated Successfully',
                 201
             );

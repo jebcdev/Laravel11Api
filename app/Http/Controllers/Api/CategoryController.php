@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
         try {
             return ApiResponse::Success(
-                Category::query()->orderBy('id', 'desc')->get(),
+                Category::query()->with(['products'])->orderBy('id', 'desc')->get(),
                 'Categories List',
                 200
             );
@@ -55,7 +55,7 @@ class CategoryController extends Controller
     {
         try {
             return ApiResponse::Success(
-                $category,
+                $category->load(['products']),
                 'Category Details',
                 200
             );
@@ -76,7 +76,7 @@ class CategoryController extends Controller
             $category->update($data);
 
             return ApiResponse::Success(
-                $category,
+                $category->load(['products']),
                 'Category Updated Successfully',
                 201
             );
