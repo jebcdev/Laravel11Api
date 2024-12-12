@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Brand\StoreBrandRequest;
 use App\Http\Requests\Brand\UpdateBrandRequest;
+use App\Http\Responses\ApiResponse;
 use App\Models\Brand;
-
+use Exception;
+use Illuminate\Http\Client\ResponseSequence;
 use Illuminate\Routing\Controller;
 
 class BrandController extends Controller
@@ -16,8 +18,13 @@ class BrandController extends Controller
     public function index()
     {
         try {
-        } catch (\Throwable $th) {
-            throw $th;
+            return ApiResponse::Success(
+                Brand::query()->orderBy('id', 'desc')->get(),
+                'Brands List',
+                200
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e, "Error while fetching brands. " . $e->getMessage(), 500);
         }
     }
 
@@ -27,8 +34,16 @@ class BrandController extends Controller
     public function store(StoreBrandRequest $request)
     {
         try {
-        } catch (\Throwable $th) {
-            throw $th;
+            $data = $request->validated();
+
+            return ApiResponse::Success(
+                Brand::create($data),
+                'Brand Created Successfully',
+                201
+            );
+            
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Saving",500);
         }
     }
 
@@ -38,8 +53,13 @@ class BrandController extends Controller
     public function show(Brand $brand)
     {
         try {
-        } catch (\Throwable $th) {
-            throw $th;
+            return ApiResponse::Success(
+                $brand,
+                'Brands Details',
+                200
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Fetching Details",500);
         }
     }
 
@@ -50,8 +70,17 @@ class BrandController extends Controller
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
         try {
-        } catch (\Throwable $th) {
-            throw $th;
+            $data = $request->validated();
+
+            $brand->update($data);
+
+            return ApiResponse::Success(
+                $brand,
+                'Brand Updated Successfully',
+                201
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Updating",500);
         }
     }
 
@@ -61,8 +90,15 @@ class BrandController extends Controller
     public function destroy(Brand $brand)
     {
         try {
-        } catch (\Throwable $th) {
-            throw $th;
+            $brand->delete();
+
+            return ApiResponse::Success(
+                [],
+                'Brand Deleted Successfully',
+                200
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Deleting",500);
         }
     }
 }

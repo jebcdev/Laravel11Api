@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -12,7 +12,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,6 +24,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'brand_id' => [
+                'sometimes',
                 'required',
                 Rule::exists('brands', 'id'),
             ],
@@ -32,20 +33,24 @@ class UpdateProductRequest extends FormRequest
                 Rule::exists('categories', 'id'),
             ],
             'name' => [
+                'sometimes',
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('products', 'name')->ignore($this->product),
             ],
             'description' => [
+                'sometimes',
                 'required',
                 'string',
             ],
             'price' => [
+                'sometimes',
                 'required',
                 'numeric',
             ],
             'stock' => [
+                'sometimes',
                 'required',
                 'integer',
             ],

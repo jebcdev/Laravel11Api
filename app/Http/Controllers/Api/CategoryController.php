@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Category\StoreCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
+use App\Http\Responses\ApiResponse;
 use App\Models\Category;
+use Exception;
 use Illuminate\Routing\Controller;
 
 
@@ -16,9 +18,13 @@ class CategoryController extends Controller
     public function index()
     {
         try {
-            //code...
-        } catch (\Throwable $th) {
-            //throw $th;
+            return ApiResponse::Success(
+                Category::query()->orderBy('id', 'desc')->get(),
+                'Categories List',
+                200
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Fetching Categories",500);
         }
     }
 
@@ -30,9 +36,15 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         try {
-            //code...
-        } catch (\Throwable $th) {
-            //throw $th;
+            $data = $request->validated();
+
+            return ApiResponse::Success(
+                Category::create($data),
+                'Category Created Successfully',
+                201
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Saving",500);
         }
     }
 
@@ -42,9 +54,13 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         try {
-            //code...
-        } catch (\Throwable $th) {
-            //throw $th;
+            return ApiResponse::Success(
+                $category,
+                'Category Details',
+                200
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Fetching Details",500);
         }
     }
 
@@ -55,9 +71,17 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         try {
-            //code...
-        } catch (\Throwable $th) {
-            //throw $th;
+            $data = $request->validated();
+
+            $category->update($data);
+
+            return ApiResponse::Success(
+                $category,
+                'Category Updated Successfully',
+                201
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Updating",500);
         }
     }
 
@@ -67,9 +91,15 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
-            //code...
-        } catch (\Throwable $th) {
-            //throw $th;
+            $category->delete();
+
+            return ApiResponse::Success(
+                [],
+                'Category Deleted Successfully',
+                200
+            );
+        } catch (Exception $e) {
+            return ApiResponse::Error($e->getMessage(), "Error While Deleting",500);
         }
     }
 }

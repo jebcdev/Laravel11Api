@@ -11,6 +11,8 @@ class PurchaseDetail extends Model
 {
     /** @use HasFactory<\Database\Factories\PurchaseDetailFactory> */
     use HasFactory,SoftDeletes;
+
+    
     
         protected $fillable = [
             'purchase_id',
